@@ -48,7 +48,7 @@ int main(){
 
     // reading out client buffer
 
-    char buffer[1024] = {0};
+    char buffer[1024] = {0}; // intializing char array to null termionator 
     recv(accept,buffer,size(buffer),0);
     std::cout << "Msg from client : " << buffer << std::endl;
 
