@@ -1,5 +1,8 @@
 #include <sys/socket.h>
-
+#include <netinet/in.h>
+#include <iostream>
+#include <unistd.h>
+#include <string>
 int main(){
     // creating clicket socket
     int clientSocket = socket(AF_INET,SOCK_STREAM,0);
@@ -18,17 +21,17 @@ int main(){
 
     // connecting to server
 
-    int connect = connect(clientAddr,(struck sockaddr *)&serverAddress,sizeof(serverAddress));
+    int connect_result = connect(clientSocket,(struct sockaddr *)&serverAddress,sizeof(serverAddress));
 
-    if(connect == -1){
+    if(connect_result == -1){
         std::cout << "Error connecting to server" << std::endl;
         return 1;
     }
 
     // sending message to server
-    const char * message = "Hello Josie";
+    std::string message  = "Hello Josie";
 
-    send(clientSocket,message,size(message),0);
+    send(clientSocket,message,message.size(),0);
 
     close(clientSocket);
 
