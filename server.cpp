@@ -50,9 +50,18 @@ int main(){
 
     // reading out client buffer
 
-    char buffer[1024] = {0}; // intializing char array to null termionator 
-    recv(accept_result,buffer,sizeof(buffer),0);
-    std::cout << "Msg from client : " << buffer << std::endl;
+    char buffer[1024] = {0}; // intializing char array to null termionator
+
+    int bytes_sent = recv(accept_result,buffer,sizeof(buffer),0) ;
+
+	while(bytes_sent >0){
+		bytes_sent = recv(accept_result,buffer,sizeof(buffer),0);
+}
+    
+    std::cout << "Msg from client : " << buffer << std::endl ;
+    
+
+
 
     //closign the socket
 
@@ -63,6 +72,9 @@ int main(){
 
     return 0;
 }
+
+
+
 
 
 

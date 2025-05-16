@@ -2,7 +2,6 @@
 #include <netinet/in.h>
 #include <iostream>
 #include <unistd.h>
-#include <string>
 int main(){
     // creating clicket socket
     int clientSocket = socket(AF_INET,SOCK_STREAM,0);
@@ -29,9 +28,16 @@ int main(){
     }
 
     // sending message to server
-    std::string message  = "Hello Josie";
+    const char * message  = "Hello Josie";
 
-    send(clientSocket,message,message.size(),0);
+    int bytes_sent = send(clientSocket,message,sizeof(message),0) - 1 ;
+
+    while( bytes_sent < sizeof(message)){
+
+
+        bytes_sent += send(clientSocket,&message[bytes_sent+1],sizeof(message),0);;
+
+}
 
     close(clientSocket);
 
