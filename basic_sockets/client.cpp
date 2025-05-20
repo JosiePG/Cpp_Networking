@@ -28,7 +28,7 @@ int main(){
     }
 
     // sending message to server
-    const char * message  = "Hello Josie";
+    const char * message  = "Hello Delia";
 
     int bytes_sent = send(clientSocket,message,sizeof(message),0) - 1 ;
 
