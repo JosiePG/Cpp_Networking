@@ -53,6 +53,23 @@ int main(){
         std::cout << "Error connecting client socket" <<std::endl;
     }
 
+    std::string HTTPRequest = "GET / \n Host:" + host_name ;
+
+    // sending http request to server
+
+    int clientSend = send(clientSocket,HTTPRequest.c_str(),HTTPRequest.length(),0);
+
+    if (clientSend == -1 ) {
+        std::cout << "Error sending http request";
+        return 1;
+    }
+
+
+
+
+
+
+
 
 
 
