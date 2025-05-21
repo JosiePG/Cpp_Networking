@@ -32,7 +32,7 @@ int main(){
     if(getaddressinfo_status!=0){
         std::cout << "Error getting address info" <<std::endl;
         std::cout << gai_strerror(getaddressinfo_status) <<std::endl;
-        return getaddressinfo_status;
+        return 1;
     }
 
     std::cout << server_info->ai_canonname << std::endl ;
@@ -40,6 +40,22 @@ int main(){
     // creating client socket
 
     int clientSocket = socket(AF_INET,SOCK_STREAM,0);
+
+    if (clientSocket == -1) {
+        std::cout << "Error initalizing client socket" <<std::endl;
+        return 1;
+    }
+
+    // connecting to server
+
+    int clientConnect = connect(clientSocket,server_info->ai_addr,server_info->ai_addrlen);
+    if (clientConnect == -1) {
+        std::cout << "Error connecting client socket" <<std::endl;
+    }
+
+
+
+
 
 
 
