@@ -5,6 +5,9 @@
 #include <sys/types.h>
 #include <string>
 #include <cstring>
+#include <vector>
+#include <iterator>
+#include <errno.h>
 
 int main(){
 
@@ -35,9 +38,10 @@ int main(){
         return 1;
     }
 
-    std::cout << server_info->ai_canonname << std::endl ;
-
+    std::cout << "Cannon name " << server_info->ai_canonname << std::endl ;
+    std::cout << "Address " << server_info->ai_addr<< std::endl ;
     // creating client socket
+
 
     int clientSocket = socket(AF_INET,SOCK_STREAM,0);
 
@@ -51,6 +55,7 @@ int main(){
     int clientConnect = connect(clientSocket,server_info->ai_addr,server_info->ai_addrlen);
     if (clientConnect == -1) {
         std::cout << "Error connecting client socket" <<std::endl;
+        std::cout << "Error code " << errno << std::endl;
     }
 
     std::string HTTPRequest = "GET / \n Host:" + host_name ;
@@ -63,6 +68,30 @@ int main(){
         std::cout << "Error sending http request";
         return 1;
     }
+
+    // reading web page
+
+    char buffer[1024] = {0}; // intializing char array to null termionator
+
+    int bytes_sent;
+
+    std::vector<char> final;
+
+    while((bytes_sent = recv(clientSocket,buffer,sizeof(buffer),0) ) > 0){
+        for (int i =0; i<std::size(buffer); i++){
+            final.push_back(buffer[i]);
+        }
+
+    }
+
+    std::cout << "Msg from client : " << std::endl ;
+    for (auto i:final) {
+        std::cout << i ;
+    }
+    std::cout << std::endl;
+
+    // closing the socket
+    close(clientSocket);
 
 
 
