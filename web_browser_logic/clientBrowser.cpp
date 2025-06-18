@@ -38,12 +38,11 @@ int main(){
         return 1;
     }
 
-    std::cout << "Cannon name " << server_info->ai_canonname << std::endl ;
-    std::cout << "Address " << server_info->ai_addr<< std::endl ;
     // creating client socket
 
+    int clientSocket = socket(server_info->ai_family,SOCK_STREAM,0);
 
-    int clientSocket = socket(AF_INET,SOCK_STREAM,0);
+
 
     if (clientSocket == -1) {
         std::cout << "Error initalizing client socket" <<std::endl;
